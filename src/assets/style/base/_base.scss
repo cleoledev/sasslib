@@ -1,0 +1,28 @@
+@use '../abstract' as *;
+
+@font-face {
+  font-family: 'Microsoft JhengHei Modify';
+  unicode-range: 'U+7db0', 'U+78A7', 'U+7B75'; /* ASCII (碧筵綰) */
+  font-style: normal;
+  font-weight: normal;
+  src: local('Microsoft JhengHei');
+}
+
+html,
+body {
+  min-width: 320px;
+  font-family: Arial, 'Microsoft JhengHei Modify', '微軟正黑體',
+    'Microsoft JhengHei', Roboto, 'PingFangTC', sans-serif;
+  font-size: 16px;
+  line-height: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input,
+label,
+select,
+button {
+  cursor: pointer;
+}
