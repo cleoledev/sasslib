@@ -1,5 +1,4 @@
 const IS_BUILD = process.env.BUILD === 'true'
-const routeList = require('./src/utils/routeList.js')
 
 module.exports = {
   plugins: [
@@ -21,9 +20,7 @@ module.exports = {
           /-(leave|enter|appear)(|-(to|from|active))$/,
           /^(?!(|.*?:)cursor-move).+-move$/,
           /^router-link(|-exact)-active$/,
-          /data-v-.*/,
-          /^tag-/,
-          ...routeList
+          /data-v-.*/
         ]
       }),
     require('autoprefixer')

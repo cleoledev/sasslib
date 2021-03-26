@@ -1,4 +1,5 @@
 const path = require('path')
+const StyleLintPlugin = require('stylelint-webpack-plugin')
 const resolve = (dir) => path.join(__dirname, '.', dir)
 
 module.exports = {
@@ -18,9 +19,29 @@ module.exports = {
     loaderOptions: {
       scss: {
         prependData: `
-          @use "@style/abstract/_index.scss" as *;
+          @use "@/assets/style/abstract/_index.scss" as *;
         `
       }
     }
+  },
+  configureWebpack: (config) => {
+    const customConfig = {
+      mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+      resolve: {
+        alias: {
+          '@comp': '@/components',
+          '@img': '@/assets/img',
+          '@page': '@/pages',
+          '@style': '@/assets/style'
+        }
+      },
+      plugins: [
+        new StyleLintPlugin({
+          files: ['src/**/*.{vue,scss}']
+        })
+      ],
+      optimization: {}
+    }
+    return customConfig
   }
 }

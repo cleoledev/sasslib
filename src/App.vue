@@ -9,14 +9,14 @@
 </template>
 
 <style lang="scss">
-@use "@style/base/_index.scss" as *;
+@use '@/assets/style/base/_index.scss' as *;
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
+  color: #2c3e50;
+  text-align: center;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
 
 #nav {
