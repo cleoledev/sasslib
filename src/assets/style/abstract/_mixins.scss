@@ -24,14 +24,8 @@
 @mixin inset($offset) {
   position: absolute;
   inset: $offset;
-  @supports not (inset: 0) {
-    $edge: f.inset-syntax($offset);
-    @each $dir, $value in $edge {
-      #{$dir}: $value;
-    }
-  }
 
-  @include support-ie {
+  @include supports('not (inset: 0)') {
     $edge: f.inset-syntax($offset);
     @each $dir, $value in $edge {
       #{$dir}: $value;
@@ -41,6 +35,16 @@
 
 @mixin support-ie() {
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    @content;
+  }
+}
+
+@mixin supports ($condition) {
+  @supports #{$condition} {
+    @content;
+  }
+
+  @include support-ie {
     @content;
   }
 }
