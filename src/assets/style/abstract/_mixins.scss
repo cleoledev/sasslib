@@ -1,7 +1,6 @@
 
 @use 'sass:map';
-@use 'sass:list';
-@use 'sass:meta';
+@use 'sass:math';
 @use 'variables' as v;
 @use 'functions' as f;
 
@@ -40,8 +39,22 @@
   }
 }
 
-@mixin support-ie () {
+@mixin support-ie() {
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     @content;
+  }
+}
+
+@mixin aspect-ratio($width, $height, $child: pseudo) {
+  @if ($child == pseudo) {
+    &::after {
+      display: block;
+      padding-top: math.percentage($height / $width);
+      content: '';
+    }
+  } @else {
+    #{$child} {
+      padding-top: math.percentage($height / $width);
+    }
   }
 }
