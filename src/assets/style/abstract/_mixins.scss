@@ -65,10 +65,13 @@
 }
 
 @mixin object-img($config) {
+  picture,
   img {
     width: 100%;
     height: 100%;
+  }
 
+  img {
     @each $prop, $value in $config {
       @if ($prop == size) {
         object-fit: $value;
