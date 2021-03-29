@@ -14,9 +14,9 @@ module.exports = {
     'selector-pseudo-class-no-unknown': true, // 未知偽類
     'selector-pseudo-element-no-unknown': true, // 未知偽元素
     'selector-type-no-unknown': true, // 未知 tag
-    'scss/at-rule-no-unknown': [true, { // 不明規則
-      ignoreAtRules: ['tailwind', 'apply', 'variants', 'responsive', 'screen', 'map']
-    }],
+    // 'scss/at-rule-no-unknown': [true, { // 不明規則
+    //   ignoreAtRules: ['tailwind', 'apply', 'variants', 'responsive', 'screen']
+    // }],
     'no-descending-specificity': null, // 層級問題
     'no-duplicate-at-import-rules': true, // 重複 @import
     'no-duplicate-selectors': true, // 多個重複選取器
