@@ -23,6 +23,8 @@ module.exports = {
           /data-v-.*/
         ]
       }),
-    require('autoprefixer')
+    require('autoprefixer')({
+      grid: 'autoplace'
+    })
   ]
 }
