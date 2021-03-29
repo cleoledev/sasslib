@@ -1,5 +1,106 @@
+@use 'sass:string';
+@use 'sass:map';
+@use '../abstract/mixins' as m;
+@use '../abstract/variables' as v;
+
 .text-invisible {
   font-size: 0;
   line-height: 0;
   color: transparent;
 }
+
+.position-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+// spacing
+$max-space-amount: 10;
+$space-range: 4;
+$sides: (left, right, bottom, top);
+$utilities: (
+  width: (
+    responsive: true
+  ),
+  height: (
+    responsive: true
+  ),
+  margin: (
+    negative: true,
+    direction: true,
+    responsive: true
+  ),
+  padding: (
+    direction: true,
+    responsive: true
+  )
+);
+
+@mixin generate-utilities () {
+  @each $prop, $config in $utilities {
+    $responsive: map.get($config, responsive);
+    // normal
+    @include generate-space($prop, $config);
+    // with breakpoints
+    @if ($responsive == true) {
+      @each $size, $bp in v.$breakpoints {
+        $prefix: #{$size}\:;
+        @include m.screen ($size) {
+          @include generate-space($prop, $config, $prefix);
+        }
+      }
+    }
+  }
+}
+
+@mixin generate-space ($prop, $config, $prefix: '') {
+  $has-direction: map.get($config, direction);
+  $has-negative: map.get($config, negative);
+
+  @for $space from 1 through $max-space-amount {
+    @if ($space <= 10 or $space % 4 == 0) {
+      $class: #{$prefix}#{string.slice($prop, 1, 1)};
+      // normal
+      @include get-property-value(
+        $class,
+        $space,
+        $prop,
+        $space,
+        $has-direction
+      );
+      // negative value
+      @if ($has-negative == true) {
+        $len: string.length($class);
+        $class: string.insert($class, '-', ($len + 1) * -1);
+
+        @include get-property-value(
+          $class,
+          $space,
+          $prop,
+          $space * -1,
+          $has-direction
+        );
+      }
+    }
+  }
+}
+
+@mixin get-property-value ($class, $space, $prop, $value, $has-direction) {
+  .#{$class}-#{$space} {
+    #{$prop}: #{$value}px;
+  }
+
+  @if ($has-direction == true) {
+    @each $side in $sides {
+      $s: string.slice($side, 1, 1);
+
+      .#{$class}#{$s}-#{$space} {
+        #{$prop}-#{$side}: #{$value}px;
+      }
+    }
+  }
+}
+
+@include generate-utilities;
