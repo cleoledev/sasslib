@@ -17,14 +17,16 @@
 }
 
 // spacing
-$max-space-amount: 10;
+$max-space-amount: 400;
 $space-range: 4;
 $sides: (left, right, bottom, top);
 $utilities: (
   width: (
+    minmax: true,
     responsive: true
   ),
   height: (
+    minmax: true,
     responsive: true
   ),
   margin: (
@@ -58,8 +60,9 @@ $utilities: (
 @mixin generate-space ($prop, $config, $prefix: '') {
   $has-direction: map.get($config, direction);
   $has-negative: map.get($config, negative);
+  $has-minmax: map.get($config, minmax);
 
-  @for $space from 1 through $max-space-amount {
+  @for $space from 0 through $max-space-amount {
     @if ($space <= 10 or $space % 4 == 0) {
       $class: #{$prefix}#{string.slice($prop, 1, 1)};
       // normal
@@ -83,11 +86,20 @@ $utilities: (
           $has-direction
         );
       }
+
+      // minmax
+
+      @if ($has-minmax == true) {
+        @each $p in (min, max) {
+          $class: #{$prefix}#{$p}-#{string.slice($prop, 1, 1)};
+          @include get-property-value($class, $space, $prop, $space);
+        }
+      }
     }
   }
 }
 
-@mixin get-property-value ($class, $space, $prop, $value, $has-direction) {
+@mixin get-property-value ($class, $space, $prop, $value, $has-direction: false) {
   .#{$class}-#{$space} {
     #{$prop}: #{$value}px;
   }
