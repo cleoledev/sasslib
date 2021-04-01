@@ -82,6 +82,7 @@
   }
 
   @include not-support('object-fit: cover') {
+    background-position: center;
     background-repeat: no-repeat;
 
     @each $prop, $value in $config {
