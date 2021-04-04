@@ -1,7 +1,6 @@
 @use 'sass:string';
 @use 'sass:map';
 @use '../abstract/mixins' as m;
-@use '../abstract/variables' as v;
 
 .text-invisible {
   font-size: 0;
@@ -17,9 +16,17 @@
 }
 
 // spacing
-$max-space-amount: 400;
+$max-space-amount: 100;
 $space-range: 4;
-$sides: (left, right, bottom, top);
+$breakpoints: (sm, md);
+$directions: (
+  l: left,
+  r: right,
+  t: top,
+  b: bottom,
+  x: (left, right),
+  y: (top, bottom)
+);
 $utilities: (
   width: (
     minmax: true,
@@ -47,7 +54,7 @@ $utilities: (
     @include generate-space($prop, $config);
     // with breakpoints
     @if ($responsive == true) {
-      @each $size, $bp in v.$breakpoints {
+      @each $size in $breakpoints {
         $prefix: #{$size}\:;
         @include m.screen ($size) {
           @include generate-space($prop, $config, $prefix);
@@ -88,7 +95,6 @@ $utilities: (
       }
 
       // minmax
-
       @if ($has-minmax == true) {
         @each $p in (min, max) {
           $class: #{$prefix}#{$p}-#{string.slice($prop, 1, 1)};
@@ -105,11 +111,11 @@ $utilities: (
   }
 
   @if ($has-direction == true) {
-    @each $side in $sides {
-      $s: string.slice($side, 1, 1);
-
-      .#{$class}#{$s}-#{$space} {
-        #{$prop}-#{$side}: #{$value}px;
+    @each $d, $sides in $directions {
+      .#{$class}#{$d}-#{$space} {
+        @each $side in $sides {
+          #{$prop}-#{$side}: #{$value}px;
+        }
       }
     }
   }
