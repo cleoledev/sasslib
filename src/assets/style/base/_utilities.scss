@@ -70,7 +70,7 @@ $utilities: (
   $has-minmax: map.get($config, minmax);
 
   @for $space from 0 through $max-space-amount {
-    @if ($space <= 10 or $space % 4 == 0) {
+    @if ($space <= 10 or $space % $space-range == 0) {
       $class: #{$prefix}#{string.slice($prop, 1, 1)};
       // normal
       @include get-property-value(
