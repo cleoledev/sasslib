@@ -29,10 +29,8 @@ module.exports = {
       mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
       resolve: {
         alias: {
-          '@comp': '@/components',
-          '@img': '@/assets/img',
-          '@page': '@/pages',
-          '@style': '@/assets/style'
+          '~': resolve('src'),
+          '@': resolve('src')
         }
       },
       plugins: [
