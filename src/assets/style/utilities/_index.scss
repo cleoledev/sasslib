@@ -1,16 +1,12 @@
 @use './mixins' as *;
+@use '../abstract/extends';
 
 @include generate-utilities;
 
 .text-invisible {
-  font-size: 0;
-  line-height: 0;
-  color: transparent;
+  @extend %text-invisible;
 }
 
 .position-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  @extend %position-center;
 }
